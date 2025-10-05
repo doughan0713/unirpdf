@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Unificador de PDF</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- SweetAlert2 -->
+  <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.min.css" rel="stylesheet">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link href="styles.css" rel="stylesheet">
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+</head>
+<body>
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-xl-8 col-lg-9 col-md-10">
+        <div class="card card-hero p-5">
+          <div class="text-center mb-5">
+            <div class="brand">Unificador de PDF</div>
+            <div class="subtitle">Una seus documentos em PDF de forma rápida e segura</div>
+          </div>
+          
+          <div class="lgpd-note text-center mb-4">
+            <i data-lucide="shield-check" class="me-2" style="width: 18px; height: 18px; vertical-align: text-bottom;"></i>
+            Este aplicativo está em conformidade com a <strong>LGPD</strong> — processamos tudo localmente no seu navegador, sem envio de arquivos para servidores externos.
+          </div>
+
+          <hr>
+
+          <!-- Progress Steps -->
+          <div class="steps-container mb-4">
+            <div class="d-flex align-items-center justify-content-center">
+              <div class="step-indicator" id="step1-indicator">
+                <span class="step-circle active">1</span>
+                <span class="step-label">PDF 1</span>
+              </div>
+              <div class="step-line"></div>
+              <div class="step-indicator" id="step2-indicator">
+                <span class="step-circle">2</span>
+                <span class="step-label">PDF 2</span>
+              </div>
+              <div class="step-line"></div>
+              <div class="step-indicator" id="step3-indicator">
+                <span class="step-circle">3</span>
+                <span class="step-label">Gerar PDF</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 1: PDF 1 -->
+          <div class="step-content active" id="step1">
+            <div class="text-center mb-4">
+              <h4 class="step-main-title">Etapa 1: Adicionar PDF 1</h4>
+              <p class="step-subtitle">Selecione o primeiro arquivo PDF</p>
+            </div>
+            
+            <div class="row justify-content-center">
+              <div class="col-lg-8">
+                <div class="card file-card-large p-5 shadow-hover">
+                  <input id="fileNota" type="file" accept="application/pdf" class="form-control mb-4">
+                  <div id="notaPreview" class="d-flex flex-column gap-2">
+                    <div class="upload-area-large">
+                      <i data-lucide="file-plus" class="upload-icon-large mb-3"></i>
+                      <h5 class="mb-2">Clique aqui ou arraste o arquivo PDF</h5>
+                      <p class="muted-sm mb-0">Primeiro arquivo PDF (Máx. 50MB)</p>
+                    </div>
+                  </div>
+                  
+                  <div class="text-center mt-4">
+                    <button id="nextToStep2" class="btn btn-merge" disabled>
+                      <i data-lucide="arrow-right" class="me-2" style="width: 18px; height: 18px;"></i>
+                      Próxima Etapa
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 2: PDF 2 -->
+          <div class="step-content" id="step2">
+            <div class="text-center mb-4">
+              <h4 class="step-main-title">Etapa 2: Adicionar PDF 2</h4>
+              <p class="step-subtitle">Agora selecione o segundo arquivo PDF</p>
+            </div>
+            
+            <div class="row justify-content-center">
+              <div class="col-lg-8">
+                <div class="card file-card-large p-5 shadow-hover">
+                  <input id="fileBoleto" type="file" accept="application/pdf" class="form-control mb-4">
+                  <div id="boletoPreview" class="d-flex flex-column gap-2">
+                    <div class="upload-area-large">
+                      <i data-lucide="file-plus" class="upload-icon-large mb-3"></i>
+                      <h5 class="mb-2">Clique aqui ou arraste o arquivo PDF</h5>
+                      <p class="muted-sm mb-0">Segundo arquivo PDF</p>
+                    </div>
+                  </div>
+                  
+                  <div class="d-flex justify-content-between mt-4">
+                    <button id="backToStep1" class="btn btn-outline-secondary">
+                      <i data-lucide="arrow-left" class="me-2" style="width: 18px; height: 18px;"></i>
+                      Voltar
+                    </button>
+                    <button id="nextToStep3" class="btn btn-merge" disabled>
+                      <i data-lucide="arrow-right" class="me-2" style="width: 18px; height: 18px;"></i>
+                      Próxima Etapa
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 3: Generate PDF -->
+          <div class="step-content" id="step3">
+            <div class="text-center mb-4">
+              <h4 class="step-main-title">Etapa 3: Gerar PDF Unificado</h4>
+              <p class="step-subtitle">Defina o nome do arquivo e gere seu PDF unificado</p>
+            </div>
+            
+            <div class="row justify-content-center">
+              <div class="col-lg-8">
+                <div class="card p-5 shadow-hover">
+                  <!-- Files Summary -->
+                  <div class="files-summary mb-4">
+                    <h6 class="mb-3" style="color: #1a202c;">Arquivos selecionados:</h6>
+                    <div class="row g-3">
+                      <div class="col-md-6">
+                        <div class="selected-file">
+                          <i data-lucide="file-text" class="me-2" style="color: #ff5500;"></i>
+                          <span class="file-label">PDF 1:</span>
+                          <span id="notaFileName" class="fw-bold">-</span>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="selected-file">
+                          <i data-lucide="file-text" class="me-2" style="color: #ff5500;"></i>
+                          <span class="file-label">PDF 2:</span>
+                          <span id="boletoFileName" class="fw-bold">-</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <hr class="my-4">
+                  
+                  <!-- Output Name -->
+                  <div class="mb-4">
+                    <label class="form-label fw-semibold" style="color: #1a202c !important;">Nome do arquivo final:</label>
+                    <div class="input-group input-group-lg">
+                      <span class="input-group-text">
+                        <i data-lucide="file-text" class="me-2" style="width: 20px; height: 20px;"></i>
+                      </span>
+                      <input id="outputName" type="text" class="form-control" placeholder="ex: pdf_unificado" value="pdf_unificado">
+                      <span class="input-group-text fixed-ext">.pdf</span>
+                    </div>
+                    <div class="form-text mt-2" style="color: #4a5568;">A extensão <strong>.pdf</strong> será adicionada automaticamente</div>
+                  </div>
+                  
+                  <div class="d-flex justify-content-between">
+                    <button id="backToStep2" class="btn btn-outline-secondary">
+                      <i data-lucide="arrow-left" class="me-2" style="width: 18px; height: 18px;"></i>
+                      Voltar
+                    </button>
+                    <button id="btnMerge" class="btn btn-merge btn-lg">
+                      <i data-lucide="download" class="me-2" style="width: 20px; height: 20px;"></i>
+                      Unificar e Baixar PDF
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div id="helpArea" class="help-area">
+              <div class="d-flex align-items-start">
+                <i data-lucide="info" class="me-3 mt-1" style="width: 20px; height: 20px; color: #ff5500;"></i>
+                <div>
+                  <h6 class="mb-2" style="color: #1e293b;">Como funciona</h6>
+                  <p class="mb-2">Arraste os arquivos nos campos acima ou clique para escolher. Você verá um preview com o nome do arquivo e validação do formato.</p>
+                  <p class="mb-0">Ao clicar em <strong>Unificar e Baixar</strong>, o PDF será gerado no seu navegador. A ordem será: <strong>PDF 1</strong> primeiro, depois o <strong>PDF 2</strong>.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4 text-center">
+            <div class="d-flex align-items-center justify-content-center gap-2 mb-2">
+              <i data-lucide="zap" style="width: 16px; height: 16px; color: #ff5500;"></i>
+              <small class="fw-medium" style="color: #2d3748;">Processamento instantâneo e seguro</small>
+            </div>
+            <div class="mt-3 py-3 border-top">
+              <small class="fw-medium" style="color: #2d3748;">Central de Tecnologia Mandu</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
+
+  <!-- pdf-lib (for merging PDFs) -->
+  <script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>
+
+  <script>
+    $(function(){
+      const { PDFDocument } = PDFLib;
+
+      let notaFile = null;
+      let boletoFile = null;
+
+      const $notaPreview = $('#notaPreview');
+      const $boletoPreview = $('#boletoPreview');
+      const $btnMerge = $('#btnMerge');
+      const $outputName = $('#outputName');
+
+      function updateUI(){
+        if(notaFile){
+          const pill = $('<div class="d-flex align-items-center justify-content-center">')
+            .append(`<div class="filename-pill"><i data-lucide="file-check" class="file-icon"></i><span>${notaFile.name}</span></div>`);
+          $notaPreview.empty().append(pill);
+          $('#nextToStep2').prop('disabled', false);
+        } else {
+          $notaPreview.html(`
+            <div class="upload-area-large">
+              <i data-lucide="file-plus" class="upload-icon-large mb-3"></i>
+              <h5 class="mb-2">Clique aqui ou arraste o arquivo PDF</h5>
+              <p class="muted-sm mb-0">Primeiro arquivo PDF (Máx. 50MB)</p>
+            </div>
+          `);
+          $('#nextToStep2').prop('disabled', true);
+        }
+
+        if(boletoFile){
+          const pill = $('<div class="d-flex align-items-center justify-content-center">')
+            .append(`<div class="filename-pill"><i data-lucide="file-check" class="file-icon"></i><span>${boletoFile.name}</span></div>`);
+          $boletoPreview.empty().append(pill);
+          $('#nextToStep3').prop('disabled', false);
+        } else {
+          $boletoPreview.html(`
+            <div class="upload-area-large">
+              <i data-lucide="file-plus" class="upload-icon-large mb-3"></i>
+              <h5 class="mb-2">Clique aqui ou arraste o arquivo PDF</h5>
+              <p class="muted-sm mb-0">Segundo arquivo PDF</p>
+            </div>
+          `);
+          $('#nextToStep3').prop('disabled', true);
+        }
+
+        $('#notaFileName').text(notaFile ? notaFile.name : '-');
+        $('#boletoFileName').text(boletoFile ? boletoFile.name : '-');
+        
+        $btnMerge.prop('disabled', !(notaFile && boletoFile));
+        
+        lucide.createIcons();
+      }
+      
+      function showStep(stepNumber) {
+        $('.step-content').removeClass('active');
+        $(`#step${stepNumber}`).addClass('active');
+        
+        $('.step-circle').removeClass('active completed');
+        $('.step-line').removeClass('active');
+        
+        for(let i = 1; i <= stepNumber; i++) {
+          if(i === stepNumber) {
+            $(`#step${i}-indicator .step-circle`).addClass('active');
+          } else {
+            $(`#step${i}-indicator .step-circle`).addClass('completed');
+          }
+          if(i < stepNumber) {
+            $(`#step${i}-indicator`).next('.step-line').addClass('active');
+          }
+        }
+      }
+
+      function isPdf(file){
+        if(!file) return false;
+        return file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
+      }
+
+      $('#fileNota').on('change', function(e){
+        const f = this.files && this.files[0];
+        if(!f) { notaFile = null; updateUI(); return; }
+        if(!isPdf(f)){
+          Swal.fire({ icon:'error', title:'Formato inválido', text:'Selecione um arquivo .pdf para o PDF 1.' });
+          this.value = '';
+          notaFile = null;
+        } else {
+          notaFile = f;
+        }
+        updateUI();
+      });
+
+      $('#fileBoleto').on('change', function(e){
+        const f = this.files && this.files[0];
+        if(!f) { boletoFile = null; updateUI(); return; }
+        if(!isPdf(f)){
+          Swal.fire({ icon:'error', title:'Formato inválido', text:'Selecione um arquivo .pdf para o PDF 2.' });
+          this.value = '';
+          boletoFile = null;
+        } else {
+          boletoFile = f;
+        }
+        updateUI();
+      });
+
+      async function readFileAsArrayBuffer(file){
+        return await new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result);
+          reader.onerror = err => reject(err);
+          reader.readAsArrayBuffer(file);
+        });
+      }
+
+      $('#btnMerge').on('click', async function(){
+        if(!(notaFile && boletoFile)){
+          Swal.fire({icon:'info', title:'Selecione os dois PDFs', text:'É necessário escolher o PDF 1 e o PDF 2.'});
+          return;
+        }
+
+        const outputFilename = ($outputName.val() || 'pdf_unificado').replace(/[^a-zA-Z0-9_\-]/g,'_') + '.pdf';
+
+        try{
+          Swal.fire({
+            title: 'Gerando PDF unificado',
+            html: '<div class="d-flex align-items-center justify-content-center"><div class="spinner-border text-primary me-3" role="status"></div><span>Combinando as páginas dos seus documentos...</span></div>',
+            allowOutsideClick: false,
+            showConfirmButton: false,
+            background: '#fff',
+            customClass: {
+              popup: 'rounded-4 shadow-lg'
+            }
+          });
+
+          const [notaBytes, boletoBytes] = await Promise.all([readFileAsArrayBuffer(notaFile), readFileAsArrayBuffer(boletoFile)]);
+          const notaPdf = await PDFDocument.load(notaBytes);
+          const boletoPdf = await PDFDocument.load(boletoBytes);
+
+          const newPdf = await PDFDocument.create();
+
+          const notaPages = await newPdf.copyPages(notaPdf, notaPdf.getPageIndices());
+          notaPages.forEach(p => newPdf.addPage(p));
+
+          const boletoPages = await newPdf.copyPages(boletoPdf, boletoPdf.getPageIndices());
+          boletoPages.forEach(p => newPdf.addPage(p));
+
+          const newPdfBytes = await newPdf.save();
+
+          const blob = new Blob([newPdfBytes], { type: 'application/pdf' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = outputFilename;
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          URL.revokeObjectURL(url);
+
+          Swal.close();
+          Swal.fire({ 
+            icon: 'success', 
+            title: 'PDF Unificado com Sucesso!', 
+            html: `<div class="text-center"><p class="mb-3">Seu arquivo foi gerado e baixado:</p><div class="filename-pill d-inline-flex"><i data-lucide="file-check" style="width: 16px; height: 16px; margin-right: 8px;"></i><strong>${escapeHtml(outputFilename)}</strong></div></div>`, 
+            timer: 3000, 
+            showConfirmButton: false,
+            customClass: {
+              popup: 'rounded-4 shadow-lg'
+            },
+            didRender: () => lucide.createIcons()
+          }).then(() => {
+            setTimeout(() => {
+              location.reload();
+            }, 500);
+          });
+        } catch (err){
+          console.error(err);
+          Swal.close();
+          Swal.fire({ icon:'error', title:'Erro ao gerar', text:'Ocorreu um erro ao unificar os PDFs. Verifique os arquivos e tente novamente.' });
+        }
+      });
+
+      function escapeHtml(unsafe) {
+        return unsafe.replace(/[&<"'>]/g, function(m) { return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'})[m]; });
+      }
+
+      $('#nextToStep2').on('click', function() {
+        if(notaFile) {
+          showStep(2);
+        }
+      });
+      
+      $('#backToStep1').on('click', function() {
+        showStep(1);
+      });
+      
+      $('#nextToStep3').on('click', function() {
+        if(boletoFile) {
+          showStep(3);
+        }
+      });
+      
+      $('#backToStep2').on('click', function() {
+        showStep(2);
+      });
+      
+      updateUI();
+      lucide.createIcons();
+
+      $('.file-card-large').on('dragover', function(e){ 
+        e.preventDefault(); 
+        $(this).addClass('drag-over');
+      });
+      
+      $('.file-card-large').on('dragleave', function(e){
+        e.preventDefault();
+        if (!$(this)[0].contains(e.relatedTarget)) {
+          $(this).removeClass('drag-over');
+        }
+      });
+      
+      $('.file-card-large').on('drop', function(e){
+        e.preventDefault();
+        $(this).removeClass('drag-over');
+        
+        const files = e.originalEvent.dataTransfer.files;
+        if(!files || !files[0]) return;
+        
+        $(this).addClass('processing');
+        
+        setTimeout(() => {
+          $(this).removeClass('processing');
+          if($(this).find('#fileNota').length) {
+            $('#fileNota')[0].files = files;
+            $('#fileNota').trigger('change');
+          } else if($(this).find('#fileBoleto').length) {
+            $('#fileBoleto')[0].files = files;
+            $('#fileBoleto').trigger('change');
+          }
+        }, 300);
+      });
+    });
+  </script>
+</body>
+</html

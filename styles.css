@@ -1,0 +1,516 @@
+* {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+body { 
+  background: #ff5500;
+  min-height: 100vh;
+  padding: 20px 0;
+}
+
+.brand {
+  font-weight: 700;
+  font-size: 2rem;
+  background: #ff5500;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: #64748b;
+  font-size: 1rem;
+  font-weight: 400;
+  margin-bottom: 0;
+}
+
+.card-hero { 
+  border-radius: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+  border: 0;
+  backdrop-filter: blur(10px);
+  background: #ffffff;
+}
+
+.file-card { 
+  min-height: 180px;
+  border-radius: 16px;
+  border: 2px dashed #e2e8f0;
+  background: #fafafa;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.file-card:hover {
+  border-color: #ff5500;
+  background: #f8fafc;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 85, 0, 0.1);
+}
+
+.file-card.drag-over {
+  border-color: #ff5500;
+  background: linear-gradient(135deg, rgba(255, 85, 0, 0.05) 0%, rgba(255, 133, 51, 0.05) 100%);
+  transform: scale(1.02);
+}
+
+.filename-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: white;
+  border: 2px solid #ff5500;
+  padding: 12px 20px;
+  border-radius: 50px;
+  font-weight: 700;
+  color: #000000;
+  text-shadow: none;
+  box-shadow: 0 4px 15px rgba(255, 85, 0, 0.3);
+  animation: slideInUp 0.5s ease;
+  font-size: 0.9rem;
+}
+
+.file-icon {
+  width: 20px;
+  height: 20px;
+  color: #ff5500;
+}
+
+.upload-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  padding: 20px;
+  color: #64748b;
+}
+
+.upload-icon {
+  width: 48px;
+  height: 48px;
+  color: #cbd5e0;
+  margin-bottom: 12px;
+}
+
+.fixed-ext { 
+  color: #64748b;
+  font-weight: 600;
+  background: #f1f5f9;
+  padding: 8px 16px;
+  border-radius: 0 8px 8px 0;
+}
+
+.lgpd-note { 
+  font-size: 0.875rem;
+  color: #2d3748;
+  background: #f7fafc;
+  padding: 16px;
+  border-radius: 12px;
+  border-left: 4px solid #ff5500;
+  font-weight: 500;
+}
+
+.btn-merge { 
+  background: linear-gradient(135deg, #ff5500 0%, #ff6600 100%);
+  color: #000000;
+  border: 0;
+  padding: 14px 32px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1rem;
+  text-shadow: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(255, 85, 0, 0.3);
+  letter-spacing: 0.5px;
+}
+
+.btn-merge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 85, 0, 0.4);
+  background: linear-gradient(135deg, #e64a00 0%, #ff5500 100%);
+  color: #000000;
+}
+
+.btn-merge:disabled {
+  background: #f8f9fa !important;
+  color: #6c757d !important;
+  border: 2px solid #e2e8f0 !important;
+  transform: none;
+  box-shadow: none;
+  text-shadow: none;
+  cursor: not-allowed;
+}
+
+.step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: linear-gradient(135deg, #ff5500 0%, #ff8533 100%);
+  color: #000000;
+  border-radius: 50%;
+  font-weight: 600;
+  font-size: 0.875rem;
+  margin-right: 10px;
+}
+
+.step-title {
+  font-weight: 600;
+  color: #1e293b;
+  font-size: 1.1rem;
+  margin-bottom: 16px;
+}
+
+.help-area {
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.muted-sm { 
+  font-size: 0.875rem;
+  color: #4a5568;
+  font-weight: 400;
+}
+
+.form-control {
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px 16px;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: #ff5500;
+  box-shadow: 0 0 0 3px rgba(255, 85, 0, 0.1);
+}
+
+.input-group-text {
+  background: #f8fafc;
+  border: 2px solid #e2e8f0;
+  color: #2d3748;
+  font-weight: 600;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.processing {
+  animation: pulse 2s infinite;
+}
+
+.card {
+  transition: all 0.3s ease;
+}
+
+.shadow-hover:hover {
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Step Navigation Styles */
+.steps-container {
+  padding: 20px 0;
+}
+
+.step-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.step-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #e2e8f0;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  transition: all 0.3s ease;
+}
+
+.step-circle.active {
+  background: #ff5500;
+  color: #000000;
+  box-shadow: 0 4px 15px rgba(255, 85, 0, 0.3);
+}
+
+.step-circle.completed {
+  background: #10b981;
+  color: #000000;
+}
+
+.step-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #2d3748;
+  text-align: center;
+}
+
+.step-line {
+  width: 100px;
+  height: 2px;
+  background: #e2e8f0;
+  margin: 0 20px;
+  align-self: flex-start;
+  margin-top: 25px;
+}
+
+.step-line.active {
+  background: #ff5500;
+}
+
+/* Step Content */
+.step-content {
+  display: none;
+  animation: fadeInUp 0.5s ease;
+}
+
+.step-content.active {
+  display: block;
+}
+
+.step-main-title {
+  color: #1a202c;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.step-subtitle {
+  color: #2d3748;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+/* Large File Cards */
+.file-card-large {
+  min-height: 300px;
+  border: 3px dashed #e2e8f0;
+  background: #fafafa;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.file-card-large:hover {
+  border-color: #ff5500;
+  background: #fff5f0;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(255, 85, 0, 0.1);
+}
+
+.file-card-large.drag-over {
+  border-color: #ff5500;
+  background: linear-gradient(135deg, rgba(255, 85, 0, 0.05) 0%, rgba(255, 133, 51, 0.05) 100%);
+  transform: scale(1.02);
+}
+
+.upload-area-large {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  color: #2d3748;
+}
+
+.upload-area-large h5 {
+  color: #1a202c !important;
+  font-weight: 600 !important;
+}
+
+.upload-icon-large {
+  width: 80px;
+  height: 80px;
+  color: #cbd5e0;
+}
+
+/* Files Summary */
+.files-summary {
+  background: #f8fafc;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.selected-file {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.file-label {
+  color: #2d3748;
+  margin-right: 8px;
+  font-weight: 500;
+}
+
+/* Button Improvements */
+.btn-outline-secondary {
+  border: 2px solid #e2e8f0;
+  color: #2d3748;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 8px;
+}
+
+.btn-outline-secondary:hover {
+  border-color: #ff5500;
+  color: #ff5500;
+  background: rgba(255, 85, 0, 0.05);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  body {
+    padding: 10px 0;
+  }
+  
+  .container {
+    padding: 0 15px;
+  }
+  
+  .brand {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+  
+  .subtitle {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .card-hero {
+    margin: 10px;
+    padding: 20px !important;
+  }
+  
+  .file-card {
+    min-height: 160px;
+    margin-bottom: 20px;
+  }
+  
+  .step-title {
+    font-size: 1rem;
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .step-number {
+    width: 24px;
+    height: 24px;
+    font-size: 0.8rem;
+  }
+  
+  .btn-merge {
+    width: 100%;
+    margin-top: 15px;
+    padding: 16px;
+  }
+  
+  .upload-area {
+    padding: 15px;
+  }
+  
+  .upload-icon {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .filename-pill {
+    font-size: 0.875rem;
+    padding: 10px 16px;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  
+  .lgpd-note {
+    font-size: 0.8rem;
+    padding: 12px;
+  }
+  
+  .help-area {
+    padding: 16px;
+  }
+  
+  .input-group {
+    flex-direction: column;
+  }
+  
+  .input-group .form-control {
+    border-radius: 8px 8px 0 0;
+  }
+  
+  .fixed-ext {
+    border-radius: 0 0 8px 8px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-hero {
+    border-radius: 16px;
+    margin: 5px;
+  }
+  
+  .file-card {
+    min-height: 140px;
+  }
+  
+  .brand {
+    font-size: 1.3rem;
+  }
+  
+  .step-title {
+    font-size: 0.95rem;
+  }
+  
+  .filename-pill {
+    font-size: 0.8rem;
+    padding: 8px 12px;
+  }
+}
